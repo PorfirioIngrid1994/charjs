@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controle Financeiro com Chart.js</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 20px;
+    }
+
+    .grafico-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .grafico {
+      width: 400px;
+      height: 400px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Controle Financeiro</h1>
+
+  <div class="grafico-container">
+    <div class="grafico">
+      <h2>Radar do Controle Financeiro</h2>
+      <canvas id="radarChart"></canvas>
+    </div>
+
+    <div class="grafico">
+      <h2>Pizza Financeira</h2>
+      <canvas id="pizzaChart"></canvas>
+    </div>
+
+    <div class="grafico">
+      <h2>Barras da Riqueza</h2>
+      <canvas id="barChart"></canvas>
+    </div>
+
+    <div class="grafico">
+      <h2>Linha do Tempo Financeiro</h2>
+      <canvas id="lineChart"></canvas>
+    </div>
+  </div>
+
+  <script>
+    // Dados de gastos por categoria
+    const gastosPorCategoria = {
+      Alimentação: 500,
+      Transporte: 300,
+      Lazer: 100,
+      Saúde: 150,
+      Outros: 50
+    };
+
+    // Cores para cada categoria
+    const coresPorCategoria = {
+      Alimentação: '#FF6384',
+      Transporte: '#36A2EB',
+      Lazer: '#FFCE56',
+      Saúde: '#4BC0C0',
+      Outros: '#99FF99'
+    };
+
+    // Dados de renda e despesas por mês 
+    const dadosFinanceiros = {
+      meses: ['Jan', 'Fev', 'Mar', 'Abr'],
+      renda: [2500, 2700, 2300, 2800],
+      despesas: [1800, 1950, 2100, 2050],
+      gastosPorCategoria: {
+        Alimentação: [300, 350, 280, 320],
+        Transporte: [250, 220, 270, 230],
+        Lazer: [100, 120, 80, 130],
+        Saúde: [150, 180, 120, 160],
+        Outros: [50, 80, 60, 40]
+      }
+    };
+
+    // Criando o gráfico de radar
+    const radarChart = new Chart(document.getElementById('radarChart'), {
+      type: 'radar',
+      data: {
+        labels: Object.keys(gastosPorCategoria),
+        datasets: [{
+          label: 'Gastos por Categoria',
+          data: Object.values(gastosPorCategoria),
+          backgroundColor: Object.values(coresPorCategoria),
+        }]
+      },
+      options: {
+        legend: {
+          display: true,
+          position: 'top'
+        },
+        scale: {
+          ticks: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Criando o gráfico de pizza
+    const pizzaChart = new Chart(document.getElementById('pizzaChart'), {
+      type: 'pie',
+      data: {
+        labels: Object.keys(gastosPorCategoria),
+        datasets: [{
+          label: 'Gastos por Categoria',
+          data: Object.values(gastosPorCategoria),
+          backgroundColor: Object.values(coresPorCategoria),
+        }]
+      },
+      options: {
+        legend: {
+          display: true,
+          position: 'top'
+        }
+      }
+    });
+
+    // Criando o gráfico de barras
+    const barChart = new Chart(document.getElementById('barChart'), {
+      type: 'bar',
+      data: {
+        labels: dadosFinanceiros.meses,
+        datasets: [{
+          label: 'Renda',
+          data: dadosFinanceiros.renda,
+          backgroundColor: '#36A2EB',
+        },
+        {
+          label: 'Despesas',
+          data: dadosFinanceiros.despesas,
+          backgroundColor: '#FF6384',
+        }]
+      },
+      options: {
+        legend: {
+          display: true,
+          position: 'top'
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+
+    // Criando o gráfico de linha
+    const lineChart = new Chart(document.getElementById('lineChart'), {
+      type: 'line',
+      data: {
+        labels: dadosFinanceiros.meses,
+        datasets: [{
+          label: 'Alimentação',
+          data: dadosFinanceiros.gastosPorCategoria.Alimentação,
+          borderColor: '#FF6384',
+          fill: false,
+        },
+        {
+          label: 'Transporte',
+          data: dadosFinanceiros.gastosPorCategoria.Transporte,
+          borderColor: '#36A2EB',
+          fill: false,
+        }]
+      },
+      options: {
+        legend: {
+          display: true,
+          position: 'top'
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+  </script>
+</body>
+</html>
